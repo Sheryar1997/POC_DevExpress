@@ -2,6 +2,7 @@ import Dashboard from "../Pages/Dashboard/Dashboard";
 import DevExtreme from "../Pages/DevExtreme/DevExtreme";
 import DevExtremeLine from "../Pages/DevExtremeLine/DevExtremeLine";
 import DevExtremePie from "../Pages/DevExtremePie/DevExtremePie";
+import DevExtremeDataGrid from "../Pages/DevExtremeDataGrid/DevExtremeDataGrid";
 
 export const adminRoutes = [
   {
@@ -20,6 +21,11 @@ export const adminRoutes = [
     path: "/pie",
     component: <DevExtremePie />,
   },
+  {
+    path: "/data-grid",
+    component: <DevExtremeDataGrid />,
+  },
+
 ];
 
 
@@ -43,5 +49,10 @@ export const adminSideBarItems = [
     path: "/pie",
     icon: "/images/enquiry_icon.png",
     title: "Dev Extreme - Pie chart",
+  },
+  {
+    path: "/data-grid",
+    icon: "/images/cells.png",
+    title: "Dev Extreme - Data Grid",
   },
 ];
