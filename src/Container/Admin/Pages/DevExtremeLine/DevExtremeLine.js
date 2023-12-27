@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     Chart,
     Series,
@@ -15,12 +15,10 @@ import {
 } from 'devextreme-react/chart';
 import service from '../../../../Components/Data/LineData';
 import { architectureSources, sharingStatisticsInfo } from '../../../../Components/Data/LineData2';
+import axios from 'axios';
 
 import './DevExtremeLine.css';
 import { Col, Row } from 'react-bootstrap';
-
-const countriesInfo = service.getCountriesInfo();
-const energySources = service.getEnergySources();
 
 const types2 = ['spline', 'stackedspline', 'fullstackedspline'];
 const types = ['line', 'stackedline', 'fullstackedline'];
@@ -29,6 +27,23 @@ const types = ['line', 'stackedline', 'fullstackedline'];
 const DevExtremeLine = () => {
     const [type, setType] = React.useState(types[0]);
     const [type2, setType2] = React.useState(types2[0]);
+
+    const [countriesInfo, setCountriesInfo] = React.useState([]);
+    const [energySources, setEnergySources] = React.useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('https://poc-dev-server.vercel.app/lineChart');
+                setCountriesInfo(response.data.lineChart);
+                setEnergySources(response.data.sources);
+            } catch (error) {
+                console.error("Error fetching data: ", error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     return (
         <div>
