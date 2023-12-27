@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PieChart, {
 	Series, Label, Connector, Size, Export, Legend
 } from 'devextreme-react/pie-chart';
+import axios from 'axios';
 import { areas } from '../../../../Components/Data/PieData';
-import { countries, waterLandRatio } from '../../../../Components/Data/PieData2';
 import { Col, Row } from 'react-bootstrap';
+
 
 function pointClickHandler(e) {
 	toggleVisibility(e.target);
@@ -18,46 +19,26 @@ function toggleVisibility(item) {
 	item.isVisible() ? item.hide() : item.show();
 }
 
-const pieCharts = [
-	{
-		title: 'Area of Countries',
-		palette: 'Soft',
-		dataSource: countries,
-	},
-	{
-		title: 'Water/Land Ratio',
-		palette: 'Soft Pastel',
-		dataSource: waterLandRatio,
-	},
-];
 
-const DevExtremePie = () => {
-	const pies = pieCharts.map((options, i) => (
-		<PieChart
-			className="pie"
-			key={i}
-			title={options.title}
-			palette={options.palette}
-			sizeGroup="piesGroup"
-			dataSource={options.dataSource}
-		>
-			<Series
-				argumentField="name"
-				valueField="area"
-			>
-				<Label
-					visible={true}
-					format="percent"
-				/>
-			</Series>
-			<Legend
-				verticalAlignment="bottom"
-				horizontalAlignment="center"
-				itemTextPosition="right"
-				rowCount={2}
-			/>
-		</PieChart>
-	));
+
+const DynamicPie = () => {
+
+	const [chartData, setChartData] = useState([]);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				// Replace with `fetch` if not using axios
+				const response = await axios.get('http://localhost:4000/pieChart');
+				setChartData(response.data);
+			} catch (error) {
+				console.error("Error fetching data: ", error);
+				// Handle error
+			}
+		};
+
+		fetchData();
+	}, []);
 
 	return (
 		<div>
@@ -68,7 +49,7 @@ const DevExtremePie = () => {
 
 						<PieChart
 							id="pie"
-							dataSource={areas}
+							dataSource={chartData}
 							palette="Bright"
 							title="Area of Countries"
 							onPointClick={pointClickHandler}
@@ -78,7 +59,8 @@ const DevExtremePie = () => {
 								argumentField="country"
 								valueField="area"
 							>
-								<Label visible={true}>
+								<Label visible={true}
+								>
 									<Connector
 										visible={true}
 										width={1}
@@ -86,16 +68,9 @@ const DevExtremePie = () => {
 								</Label>
 							</Series>
 
-							<Size width={500} />
+							<Size width={1200} height={700} />
 							<Export enabled={true} />
 						</PieChart>
-					</div>
-				</Col>
-
-				<Col md={12}>
-					<div className='graph_box'>
-						<h6 style={{ width: "fit-content", margin: "10px 0" }}>Pie Chart - 2</h6>
-						<div className="pies-container">{pies}</div>
 					</div>
 				</Col>
 			</Row>
@@ -103,4 +78,4 @@ const DevExtremePie = () => {
 	)
 }
 
-export default DevExtremePie
+export default DynamicPie;

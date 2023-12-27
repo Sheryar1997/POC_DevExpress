@@ -1,8 +1,8 @@
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import DevExtreme from "../Pages/DevExtreme/DevExtreme";
 import DevExtremeLine from "../Pages/DevExtremeLine/DevExtremeLine";
-import DevExtremePie from "../Pages/DevExtremePie/DevExtremePie";
 import DevExtremeDataGrid from "../Pages/DevExtremeDataGrid/DevExtremeDataGrid";
+import DynamicPie from "../Pages/DynamicPie/DynamicPie";
 
 export const adminRoutes = [
   {
@@ -19,7 +19,7 @@ export const adminRoutes = [
   },
   {
     path: "/pie",
-    component: <DevExtremePie />,
+    component: <DynamicPie />,
   },
   {
     path: "/data-grid",

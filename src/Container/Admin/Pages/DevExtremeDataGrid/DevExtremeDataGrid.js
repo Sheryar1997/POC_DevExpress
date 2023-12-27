@@ -52,13 +52,13 @@ const DevExtremeDataGrid = () => {
         exportDataGrid({
             component: e.component,
             worksheet: worksheet,
-            customizeCell: function(options) {
+            customizeCell: function (options) {
                 options.excelCell.font = { name: 'Arial', size: 12 };
                 options.excelCell.alignment = { horizontal: 'left' };
-            } 
-        }).then(function() {
+            }
+        }).then(function () {
             workbook.xlsx.writeBuffer()
-                .then(function(buffer) {
+                .then(function (buffer) {
                     saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'DataGrid.xlsx');
                 });
         });
@@ -140,6 +140,6 @@ const DevExtremeDataGrid = () => {
 
 
     );
-    
+
 };
 export default DevExtremeDataGrid;
