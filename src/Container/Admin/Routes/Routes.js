@@ -5,7 +5,7 @@ import DevExtremeDataGrid from "../Pages/DevExtremeDataGrid/DevExtremeDataGrid";
 import DynamicPie from "../Pages/DynamicPie/DynamicPie";
 import DevExtremePie from "../Pages/DevExtremePie/DevExtremePie";
 import DevExtremeStack from "../Pages/DevExtremeStackedBar/DevExtremeStack";
-import DevExtremeDataGrid from "../Pages/DevExtremeDataGrid/DevExtremeDataGrid";
+// import DevExtremeDataGrid from "../Pages/DevExtremeDataGrid/DevExtremeDataGrid";
 import DevExtremeScatterChart from "../Pages/DevExtremeScatterChart/DevExtemeScatter";
 
 export const adminRoutes = [
