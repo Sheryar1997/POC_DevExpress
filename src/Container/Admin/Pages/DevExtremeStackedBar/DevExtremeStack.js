@@ -10,6 +10,7 @@ import {
   Tooltip,
 } from 'devextreme-react/chart';
 import service from './data.js';
+import axios from 'axios';
 
 const dataSource = service.getMaleAgeData();
 function customizeTooltip(arg) {
@@ -18,27 +19,42 @@ function customizeTooltip(arg) {
   };
 }
 function DevExtremeStack() {
+  const [dataSource, setDataSource] = React.useState([]);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://poc-dev-server.vercel.app/lineChart');
+        setDataSource(response.data.lineChart);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
+
+    fetchData();
+  } , []);
+
   return (
     <Chart
       id="chart"
-      title="Male Age Structure"
+      title="Energy Source By Country"
       dataSource={dataSource}
     >
       <CommonSeriesSettings
-        argumentField="state"
+        argumentField="country"
         type="stackedbar"
       />
       <Series
-        valueField="young"
-        name="0-14"
+        valueField="hydro"
+        name="Hydro"
       />
       <Series
-        valueField="middle"
-        name="15-64"
+        valueField="oil"
+        name="Oil"
       />
       <Series
-        valueField="older"
-        name="65 and older"
+        valueField="gas"
+        name="Natural gas"
       />
       <ValueAxis position="right">
         <Title text="millions" />

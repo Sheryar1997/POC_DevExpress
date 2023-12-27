@@ -13,32 +13,30 @@ import {
   Label,
   Export,
 } from 'devextreme-react/chart';
-import { dataSource } from './data.js';
+import axios from 'axios';
 
-function customizePoint({ data }) {
-  let color;
-  let hoverStyle;
-  switch (data.type) {
-    case 'Star':
-      color = 'red';
-      hoverStyle = { border: { color: 'red' } };
-      break;
-    case 'Satellite':
-      color = 'gray';
-      hoverStyle = { border: { color: 'gray' } };
-      break;
-    default:
-      break;
-  }
-  return { color, hoverStyle };
-}
 export default function DevExtremeScatterChart() {
+  const [dataSource, setDataSource] = React.useState([]);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://poc-dev-server.vercel.app/pieChart');
+        setDataSource(response.data);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
+
+    fetchData();
+  } , []);
+
   return (
     <Chart
       id="chart"
-      title="Relative Masses of the Heaviest Solar System Objects"
+      title="Countries By Land Area"
       dataSource={dataSource}
-      customizePoint={customizePoint}
+      // customizePoint={customizePoint}
     >
       <ArgumentAxis>
         <Label
@@ -51,8 +49,8 @@ export default function DevExtremeScatterChart() {
         <Border visible={true} />
       </CommonPaneSettings>
       <Series
-        argumentField="name"
-        valueField="mass"
+        argumentField="country"
+        valueField="area"
         type="scatter"
       >
         <Point size={20} />
@@ -60,7 +58,7 @@ export default function DevExtremeScatterChart() {
       <Tooltip enabled={true} />
       <ValueAxis
         type="logarithmic"
-        title="Mass Relative to the Earth"
+        title="Mass realtive to UK"
       />
       <Legend visible={false} />
       <Export enabled={true} />
