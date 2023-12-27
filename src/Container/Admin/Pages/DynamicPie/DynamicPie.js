@@ -29,7 +29,7 @@ const DynamicPie = () => {
 		const fetchData = async () => {
 			try {
 				// Replace with `fetch` if not using axios
-				const response = await axios.get('http://ec2-18-216-149-209.us-east-2.compute.amazonaws.com/poc_devexpress/pieChart');
+				const response = await axios.get('https://poc-dev-server.vercel.app/pieChart');
 				setChartData(response.data);
 			} catch (error) {
 				console.error("Error fetching data: ", error);

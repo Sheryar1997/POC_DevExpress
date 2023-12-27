@@ -8,13 +8,14 @@ const lineChartRoutes = require("./routes/lineChart");
 const { connect } = require("./config/Database");
 connect();
 
-app.use(cors());
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  next();
-});
+app.use(cors(
+  {
+    origin: "*",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  }
+))
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
