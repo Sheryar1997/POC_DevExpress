@@ -3,6 +3,10 @@ import DevExtreme from "../Pages/DevExtreme/DevExtreme";
 import DevExtremeLine from "../Pages/DevExtremeLine/DevExtremeLine";
 import DevExtremeDataGrid from "../Pages/DevExtremeDataGrid/DevExtremeDataGrid";
 import DynamicPie from "../Pages/DynamicPie/DynamicPie";
+import DevExtremePie from "../Pages/DevExtremePie/DevExtremePie";
+import DevExtremeStack from "../Pages/DevExtremeStackedBar/DevExtremeStack";
+import DevExtremeDataGrid from "../Pages/DevExtremeDataGrid/DevExtremeDataGrid";
+import DevExtremeScatterChart from "../Pages/DevExtremeScatterChart/DevExtemeScatter";
 
 export const adminRoutes = [
   {
@@ -25,7 +29,14 @@ export const adminRoutes = [
     path: "/data-grid",
     component: <DevExtremeDataGrid />,
   },
-
+  {
+    path: "/stack",
+    component: <DevExtremeStack />,
+  },
+  {
+    path: "/scatter",
+    component: <DevExtremeScatterChart />,
+  }
 ];
 
 
@@ -55,4 +66,14 @@ export const adminSideBarItems = [
     icon: "/images/cells.png",
     title: "Dev Extreme - Data Grid",
   },
+  {
+    path: "/stack",
+    icon: "/images/dc_icon.png",
+    title: "Dev Extreme - Stacked Bar chart",
+  },
+  {
+    path: "/scatter",
+    icon: "/images/dc_icon.png",
+    title: "Dev Extreme - Scatter chart",
+  }
 ];
