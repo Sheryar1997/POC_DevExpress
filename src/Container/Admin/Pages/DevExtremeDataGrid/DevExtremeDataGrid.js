@@ -69,7 +69,7 @@ const totalSummaryItems = [
   { columnName: 'OrderNumber', type: 'count' },
   { columnName: 'SaleAmount', type: 'sum' },
 ];
-const defaultExpandedGroups = ['Todd Hoffman', 'Todd Hoffman|Denver', 'Todd Hoffman|Casper'];
+const defaultExpandedGroups = ['Todd Hoffman'];
 
 const DevExtremeDataGrid = () => {
   const [orders, setOrders] = useState([]);
@@ -78,7 +78,7 @@ const DevExtremeDataGrid = () => {
   ]);
   const [selection, setSelection] = useState([]);
   const exporterRef = useRef(null);
-  const [groupingCriteria, setGroupingCriteria] = useState('Employee');
+  const [groupingCriteria, setGroupingCriteria] = useState();
   const [employeeFilter, setEmployeeFilter] = useState('');
   const [cityFilter, setCityFilter] = useState('');
   const [filteredOrders, setFilteredOrders] = useState([]);
