@@ -13,7 +13,6 @@ import {
     Tooltip,
     Grid,
 } from 'devextreme-react/chart';
-import service from '../../../../Components/Data/LineData';
 import { architectureSources, sharingStatisticsInfo } from '../../../../Components/Data/LineData2';
 import axios from 'axios';
 
@@ -50,7 +49,7 @@ const DevExtremeLine = () => {
             <Row>
                 <Col md={12} className='mb-5'>
                     <div className='graph_box'>
-                        <h6 style={{ width: "fit-content", margin: "10px 0" }}>Line Chart - 1</h6>
+                        <h6 style={{ width: "fit-content", margin: "10px 0" }}>Line Chart</h6>
 
                         <Chart palette="Violet" dataSource={countriesInfo}>
                             <CommonSeriesSettings argumentField="country" type={type} />
@@ -73,7 +72,7 @@ const DevExtremeLine = () => {
                     </div>
                 </Col>
 
-                <Col md={12} className='mb-5'>
+                {/* <Col md={12} className='mb-5'>
                     <div className='graph_box'>
                         <h6 style={{ width: "fit-content", margin: "10px 0" }}>Line Chart - 2</h6>
 
@@ -112,7 +111,7 @@ const DevExtremeLine = () => {
                             <Tooltip enabled={true} />
                         </Chart>
                     </div>
-                </Col>
+                </Col> */}
             </Row>
         </div>
     )

@@ -34,7 +34,7 @@ export default function DevExtremeScatterChart() {
   return (
     <Chart
       id="chart"
-      title="Countries By Land Area"
+      title="Scatter Chart"
       dataSource={dataSource}
       // customizePoint={customizePoint}
     >

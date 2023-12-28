@@ -37,7 +37,7 @@ function DevExtremeStack() {
   return (
     <Chart
       id="chart"
-      title="Energy Source By Country"
+      title="Stack Bar Chart"
       dataSource={dataSource}
     >
       <CommonSeriesSettings

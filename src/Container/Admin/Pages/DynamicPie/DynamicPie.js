@@ -3,7 +3,6 @@ import PieChart, {
 	Series, Label, Connector, Size, Export, Legend
 } from 'devextreme-react/pie-chart';
 import axios from 'axios';
-import { areas } from '../../../../Components/Data/PieData';
 import { Col, Row } from 'react-bootstrap';
 
 
@@ -70,7 +69,7 @@ const DynamicPie = () => {
 			<Row>
 				<Col md={12} className='mb-5'>
 					<div className='graph_box'>
-						<h6 style={{ width: "fit-content", margin: "10px 0" }}>Pie Chart - 1</h6>
+						<h6 style={{ width: "fit-content", margin: "10px 0" }}>Pie Chart</h6>
 
 						<PieChart
 							id="pie"
@@ -93,7 +92,7 @@ const DynamicPie = () => {
 								</Label>
 							</Series>
 
-							<Size width={1200} height={700} />
+							{/* <Size width={1200} height={700} /> */}
 							<Export enabled={true} />
 						</PieChart>
 						{innerdata ? <div>
