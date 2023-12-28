@@ -77,8 +77,8 @@ const DevExtremeDataGrid = () => {
       .catch(error => console.error('Error fetching data: ', error));
   }, []);
 
-  const startExport = useCallback(() => {
-    exporterRef.current.exportGrid();
+  const startExport = useCallback((options) => {
+    exporterRef.current.exportGrid(options);
   }, [exporterRef]);
 
   return (
