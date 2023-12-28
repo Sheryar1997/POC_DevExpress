@@ -23,6 +23,10 @@ const types2 = ['spline', 'stackedspline', 'fullstackedspline'];
 const types = ['line', 'stackedline', 'fullstackedline'];
 // const seriesTypeLabel = { 'aria-label': 'Series Type' };
 
+function legendClickHandler(e) {
+    e.target.isVisible() ? e.target.hide() : e.target.show();
+}
+
 const DevExtremeLine = () => {
     const [type, setType] = React.useState(types[0]);
     const [type2, setType2] = React.useState(types2[0]);
@@ -51,7 +55,11 @@ const DevExtremeLine = () => {
                     <div className='graph_box'>
                         <h6 style={{ width: "fit-content", margin: "10px 0" }}>Line Chart</h6>
 
-                        <Chart palette="Violet" dataSource={countriesInfo}>
+                        <Chart
+                            palette="Violet"
+                            dataSource={countriesInfo}
+                            onLegendClick={legendClickHandler}
+                            >
                             <CommonSeriesSettings argumentField="country" type={type} />
                             {energySources.map((item) => (
                                 <Series key={item.value} valueField={item.value} name={item.name} />

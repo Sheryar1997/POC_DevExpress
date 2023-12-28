@@ -91,8 +91,6 @@ const DynamicPie = () => {
 									/>
 								</Label>
 							</Series>
-
-							{/* <Size width={1200} height={700} /> */}
 							<Export enabled={true} />
 						</PieChart>
 						{innerdata ? <div>
