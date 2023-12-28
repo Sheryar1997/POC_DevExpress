@@ -9,6 +9,10 @@ function onPointClick(e) {
     e.target.select();
 }
 
+function legendClickHandler(e) {
+    e.target.isVisible() ? e.target.hide() : e.target.show();
+}
+
 const DevExtreme = () => {
     const [dataSource, setDataSource] = React.useState([]);
     const [grossProductData, setGrossProductData] = React.useState([]);
@@ -56,6 +60,8 @@ const DevExtreme = () => {
                             title=""
                             dataSource={grossProductData}
                             onPointClick={onPointClick}
+                            onLegendClick={legendClickHandler}
+
                         >
                             <CommonSeriesSettings
                                 argumentField="country"

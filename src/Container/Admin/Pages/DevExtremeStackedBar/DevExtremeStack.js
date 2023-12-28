@@ -18,6 +18,11 @@ function customizeTooltip(arg) {
     text: `${arg.seriesName} years: ${arg.valueText}`,
   };
 }
+
+function legendClickHandler(e) {
+  e.target.isVisible() ? e.target.hide() : e.target.show();
+}
+
 function DevExtremeStack() {
   const [dataSource, setDataSource] = React.useState([]);
 
@@ -39,6 +44,8 @@ function DevExtremeStack() {
       id="chart"
       title="Stack Bar Chart"
       dataSource={dataSource}
+      onLegendClick={legendClickHandler}
+
     >
       <CommonSeriesSettings
         argumentField="country"
