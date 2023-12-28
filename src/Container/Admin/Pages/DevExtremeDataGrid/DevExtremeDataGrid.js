@@ -22,6 +22,13 @@ import {
   Toolbar,
   ExportPanel,
 } from '@devexpress/dx-react-grid-material-ui';
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup
+} from '@mui/material';
 import saveAs from 'file-saver';
 import axios from 'axios';
 
@@ -68,6 +75,7 @@ const DevExtremeDataGrid = () => {
   ]);
   const [selection, setSelection] = useState([]);
   const exporterRef = useRef(null);
+  const [groupingCriteria, setGroupingCriteria] = useState('Employee');
 
   useEffect(() => {
     axios.get('https://poc-dev-server.vercel.app/dataTable')
@@ -81,8 +89,26 @@ const DevExtremeDataGrid = () => {
     exporterRef.current.exportGrid(options);
   }, [exporterRef]);
 
+  const handleGroupingChange = (event) => {
+    setGroupingCriteria(event.target.value);
+    setGrouping([{ columnName: event.target.value }]);
+  };
+
   return (
     <Paper>
+      <FormControl component="fieldset">
+        <FormLabel component="legend">Group By</FormLabel>
+        <RadioGroup
+          row
+          name="grouping"
+          value={groupingCriteria}
+          onChange={handleGroupingChange}
+        >
+          <FormControlLabel value="Employee" control={<Radio />} label="Employee" />
+          <FormControlLabel value="CustomerStoreCity" control={<Radio />} label="City" />
+        </RadioGroup>
+      </FormControl>
+
       <Grid
         rows={orders}
         columns={columns}
