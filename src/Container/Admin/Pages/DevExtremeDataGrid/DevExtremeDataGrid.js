@@ -26,8 +26,11 @@ import {
   FormControl,
   FormControlLabel,
   FormLabel,
+  InputLabel,
+  MenuItem,
   Radio,
-  RadioGroup
+  RadioGroup,
+  Select
 } from '@mui/material';
 import saveAs from 'file-saver';
 import axios from 'axios';
@@ -76,6 +79,9 @@ const DevExtremeDataGrid = () => {
   const [selection, setSelection] = useState([]);
   const exporterRef = useRef(null);
   const [groupingCriteria, setGroupingCriteria] = useState('Employee');
+  const [employeeFilter, setEmployeeFilter] = useState('');
+  const [cityFilter, setCityFilter] = useState('');
+  const [filteredOrders, setFilteredOrders] = useState([]);
 
   useEffect(() => {
     axios.get('https://poc-dev-server.vercel.app/dataTable')
@@ -94,23 +100,87 @@ const DevExtremeDataGrid = () => {
     setGrouping([{ columnName: event.target.value }]);
   };
 
+  useEffect(() => {
+    let newFilteredOrders = orders;
+
+    if (employeeFilter) {
+      newFilteredOrders = newFilteredOrders.filter(order => order.Employee === employeeFilter);
+    }
+
+    if (cityFilter) {
+      newFilteredOrders = newFilteredOrders.filter(order => order.CustomerStoreCity === cityFilter);
+    }
+
+    setFilteredOrders(newFilteredOrders);
+  }, [employeeFilter, cityFilter, orders]);
+
+  const uniqueEmployees = Array.from(new Set(orders.map(order => order.Employee)));
+  const relevantCities = employeeFilter
+    ? Array.from(new Set(orders.filter(order => order.Employee === employeeFilter).map(order => order.CustomerStoreCity)))
+    : Array.from(new Set(orders.map(order => order.CustomerStoreCity)));
+
   return (
     <Paper>
-      <FormControl component="fieldset">
-        <FormLabel component="legend">Group By</FormLabel>
-        <RadioGroup
-          row
-          name="grouping"
-          value={groupingCriteria}
-          onChange={handleGroupingChange}
-        >
-          <FormControlLabel value="Employee" control={<Radio />} label="Employee" />
-          <FormControlLabel value="CustomerStoreCity" control={<Radio />} label="City" />
-        </RadioGroup>
-      </FormControl>
+      <div style={{ padding: 16 }}>
+        {/* <h5>Filtering</h5> */}
+        <FormLabel component="legend">Filter By</FormLabel>
+        <FormControl style={{ minWidth: 120, marginRight: 16 }}>
 
+          <InputLabel></InputLabel>
+          <Select
+            value={employeeFilter}
+            onChange={(event) => {
+              setEmployeeFilter(event.target.value);
+              setCityFilter(''); // Reset city filter when employee changes
+            }}
+            displayEmpty
+          >
+            <MenuItem value="">
+              <em>All Employees</em>
+            </MenuItem>
+            {uniqueEmployees.map(employee => (
+              <MenuItem key={employee} value={employee}>
+                {employee}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl style={{ minWidth: 120 }}>
+          <InputLabel></InputLabel>
+          <Select
+            value={cityFilter}
+            onChange={(event) => setCityFilter(event.target.value)}
+            displayEmpty// Disable if no employee is selected
+          >
+            <MenuItem value="">
+              <em>All Cities</em>
+            </MenuItem>
+            {relevantCities.map(city => (
+              <MenuItem key={city} value={city}>
+                {city}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </div>
+      <div style={{ padding: 16 }}>
+        <FormControl component="fieldset">
+          <FormLabel component="legend">Group By</FormLabel>
+          <RadioGroup
+            row
+            name="grouping"
+            value={groupingCriteria}
+            onChange={handleGroupingChange}
+          >
+            <FormControlLabel value="Employee" control={<Radio />} label="Employee" />
+            <FormControlLabel value="CustomerStoreCity" control={<Radio />} label="City" />
+            {/* <FormControlLabel value="" control={<Radio />} label="None" /> */}
+          </RadioGroup>
+        </FormControl>
+      </div>
       <Grid
-        rows={orders}
+        rows={filteredOrders} // Use filtered data
         columns={columns}
       >
         <DragDropProvider />
