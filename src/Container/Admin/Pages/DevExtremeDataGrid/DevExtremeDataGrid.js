@@ -1,145 +1,129 @@
-import React, { useCallback, useState } from 'react';
-import ODataStore from 'devextreme/data/odata/store';
-import 'devextreme/dist/css/dx.common.css';
-import 'devextreme/dist/css/dx.light.css'; // Or any other theme
-import RadioGroup, { RadioGroupTypes } from 'devextreme-react/radio-group';
-import service from '../../../../Components/Data/TableRename.js';
-import { Workbook } from 'exceljs';
-import { saveAs } from 'file-saver';
-import { exportDataGrid } from 'devextreme/excel_exporter';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
+import Paper from '@mui/material/Paper';
+import {
+  GroupingState,
+  IntegratedGrouping,
+  SummaryState,
+  IntegratedSummary,
+  SelectionState,
+  IntegratedSelection,
+  DataTypeProvider,
+} from '@devexpress/dx-react-grid';
+import { GridExporter } from '@devexpress/dx-react-grid-export';
+import {
+  Grid,
+  Table,
+  TableHeaderRow,
+  TableGroupRow,
+  GroupingPanel,
+  TableSummaryRow,
+  TableSelection,
+  DragDropProvider,
+  Toolbar,
+  ExportPanel,
+} from '@devexpress/dx-react-grid-material-ui';
+import saveAs from 'file-saver';
+import axios from 'axios';
 
+const DateFormatter = ({ value }) => (
+  <span>
+    {new Date(value).toLocaleDateString()}
+  </span>
+);
 
+const DateTypeProvider = props => (
+  <DataTypeProvider {...props} formatterComponent={DateFormatter} />
+);
 
-import DataGrid, {
-    Column,
-    Grouping,
-    GroupPanel,
-    Pager,
-    Paging,
-    SearchPanel,
-    Export
-} from 'devextreme-react/data-grid';
-import DiscountCell from './DiscountCell.js';
-
-const pageSizes = [10, 25, 50, 100];
-const dataSourceOptions = {
-    store: new ODataStore({
-        version: 2,
-        url: 'https://js.devexpress.com/Demos/SalesViewer/odata/DaySaleDtoes',
-        key: 'Id',
-        beforeSend(request) {
-            const year = new Date().getFullYear() - 1;
-            request.params.startDate = `${year}-05-10`;
-            request.params.endDate = `${year}-5-15`;
-        },
-    }),
+const onSave = (workbook) => {
+  workbook.xlsx.writeBuffer().then((buffer) => {
+    saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'DataGrid.xlsx');
+  });
 };
+
+const columns = [
+  { name: 'Employee', title: 'Employee' },
+  { name: 'OrderNumber', title: 'Invoice Number' },
+  { name: 'OrderDate', title: 'Order Date' },
+  { name: 'CustomerStoreCity', title: 'City' },
+  { name: 'CustomerStoreState', title: 'State' },
+  { name: 'SaleAmount', title: 'Sale Amount' },
+];
+
+const dateColumns = ['OrderDate'];
+const groupSummaryItems = [
+  { columnName: 'OrderNumber', type: 'count' },
+  { columnName: 'SaleAmount', type: 'max' },
+];
+const totalSummaryItems = [
+  { columnName: 'OrderNumber', type: 'count' },
+  { columnName: 'SaleAmount', type: 'sum' },
+];
+const defaultExpandedGroups = ['Todd Hoffman', 'Todd Hoffman|Denver', 'Todd Hoffman|Casper'];
+
 const DevExtremeDataGrid = () => {
-    const [collapsed, setCollapsed] = useState(true);
-    const onContentReady = useCallback(
-        (e) => {
-            if (collapsed) {
-                e.component.expandRow(['EnviroCare']);
-                setCollapsed(false);
-            }
-        },
-        [collapsed],
-    );
+  const [orders, setOrders] = useState([]);
+  const [grouping, setGrouping] = useState([
+    { columnName: 'Employee' }, { columnName: 'CustomerStoreCity' },
+  ]);
+  const [selection, setSelection] = useState([]);
+  const exporterRef = useRef(null);
 
-    const onExporting = useCallback((e) => {
-        const workbook = new Workbook();
-        const worksheet = workbook.addWorksheet('Main sheet');
-        exportDataGrid({
-            component: e.component,
-            worksheet: worksheet,
-            customizeCell: function (options) {
-                options.excelCell.font = { name: 'Arial', size: 12 };
-                options.excelCell.alignment = { horizontal: 'left' };
-            }
-        }).then(function () {
-            workbook.xlsx.writeBuffer()
-                .then(function (buffer) {
-                    saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'DataGrid.xlsx');
-                });
-        });
-    }, []);
+  useEffect(() => {
+    axios.get('https://poc-dev-server.vercel.app/dataTable')
+      .then(response => {
+        setOrders(response.data);
+      })
+      .catch(error => console.error('Error fetching data: ', error));
+  }, []);
 
-    return (
-        <DataGrid
-            dataSource={dataSourceOptions}
-            allowColumnReordering={true}
-            rowAlternationEnabled={true}
-            showBorders={true}
-            width="100%"
-            onContentReady={onContentReady}
-            onExporting={onExporting}
-        >
-            <Export
-                enabled={true}
-                fileName="DataGridExport"
-                allowExportSelectedData={true}
-            />
-            <GroupPanel visible={true} />
-            <SearchPanel
-                visible={true}
-                highlightCaseSensitive={true}
-            />
-            <Grouping autoExpandAll={false} />
+  const startExport = useCallback(() => {
+    exporterRef.current.exportGrid();
+  }, [exporterRef]);
 
-            <Column
-                dataField="Product"
-                groupIndex={0}
-            />
-            <Column
-                dataField="Amount"
-                caption="Sale Amount"
-                dataType="number"
-                format="currency"
-                alignment="right"
-            />
-            <Column
-                dataField="Discount"
-                caption="Discount %"
-                dataType="number"
-                format="percent"
-                alignment="right"
-                allowGrouping={false}
-                cellRender={DiscountCell}
-                cssClass="bullet"
-            />
-            <Column
-                dataField="SaleDate"
-                dataType="date"
-            />
-            <Column
-                dataField="Region"
-                dataType="string"
-            />
-            <Column
-                dataField="Sector"
-                dataType="string"
-            />
-            <Column
-                dataField="Channel"
-                dataType="string"
-            />
-            <Column
-                dataField="Customer"
-                dataType="string"
-                width={150}
-            />
+  return (
+    <Paper>
+      <Grid
+        rows={orders}
+        columns={columns}
+      >
+        <DragDropProvider />
+        <DateTypeProvider for={dateColumns} />
+        <GroupingState
+          defaultExpandedGroups={defaultExpandedGroups}
+          grouping={grouping}
+          onGroupingChange={setGrouping}
+        />
+        <SummaryState
+          totalItems={totalSummaryItems}
+          groupItems={groupSummaryItems}
+        />
+        <SelectionState selection={selection} onSelectionChange={setSelection} />
+        <IntegratedGrouping />
+        <IntegratedSummary />
+        <IntegratedSelection />
+        <Table />
+        <TableHeaderRow />
+        <TableSelection />
+        <TableGroupRow />
+        <TableSummaryRow />
+        <Toolbar />
+        <GroupingPanel />
+        <ExportPanel startExport={startExport} />
+      </Grid>
 
-            <Pager
-                allowedPageSizes={pageSizes}
-                showPageSizeSelector={true}
-            />
-            <Paging defaultPageSize={10} />
-        </DataGrid>
-
-
-
-
-    );
-
+      <GridExporter
+        ref={exporterRef}
+        rows={orders}
+        columns={columns}
+        grouping={grouping}
+        totalSummaryItems={totalSummaryItems}
+        groupSummaryItems={groupSummaryItems}
+        selection={selection}
+        onSave={onSave}
+      />
+    </Paper>
+  );
 };
+
 export default DevExtremeDataGrid;
