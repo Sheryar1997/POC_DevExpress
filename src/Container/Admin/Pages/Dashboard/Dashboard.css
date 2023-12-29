@@ -258,7 +258,7 @@
         width: 100%;
     }
 
-    .graph_box > div > div{
+    .graph_box>div>div {
         width: 100%;
         margin-bottom: 10px;
     }
@@ -289,4 +289,46 @@
     .recent_activity {
         margin-bottom: 50px;
     }
+}
+
+.date-filters input[type="date"] {
+    border: 1px solid #ced4da;
+    /* Light grey border */
+    border-radius: 4px;
+    /* Rounded corners */
+    padding: 8px 12px;
+    /* Padding inside the input */
+    margin-right: 8px;
+    /* Margin to separate the date pickers */
+    font-size: 16px;
+    /* Font size similar to MUI */
+    background-color: white;
+    /* White background */
+    margin-bottom: 20px;
+}
+
+/* Focus state for date pickers */
+.date-filters input[type="date"]:focus {
+    border-color: #3f51b5;
+    /* Darker border color on focus */
+    outline: none;
+    /* Removes the default focus outline */
+}
+
+.clear-button {
+    background-color: #1976d2;
+    /* MUI primary color */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+
+}
+
+.clear-button:hover {
+    background-color: #1565c0;
+    /* Darker shade for hover */
 }
