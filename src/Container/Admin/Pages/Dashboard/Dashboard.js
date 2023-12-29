@@ -13,8 +13,28 @@ import DevExtreme from '../DevExtreme/DevExtreme.js';
 import DevExtremeStack from '../DevExtremeStackedBar/DevExtremeStack.js';
 import DevExtremeScatterChart from '../DevExtremeScatterChart/DevExtemeScatter.js';
 import DevExtremeDataGrid from '../DevExtremeDataGrid/DevExtremeDataGrid.js';
+import { on } from 'devextreme/events';
 
 const Dashboard = () => {
+  const [startDate, setStartDate] = React.useState(null);
+  const [endDate, setEndDate] = React.useState(null);
+  const [seriesVisibility, setSeriesVisibility] = React.useState({
+    "Hydro-electric": true,
+    "Oil": true,
+    "Natural gas": true
+  });
+
+  const toggleSeriesVisibility = (seriesName) => {
+    setSeriesVisibility(prevState => {
+      const isOnlySeriesVisible = prevState[seriesName] && Object.keys(prevState).every(key => key === seriesName ? true : !prevState[key]);
+
+      return Object.keys(prevState).reduce((acc, key) => {
+        acc[key] = isOnlySeriesVisible ? true : key === seriesName;
+        return acc;
+      }, {});
+    });
+  };
+
 
   return (
     <div>
@@ -23,32 +43,67 @@ const Dashboard = () => {
         <h5>Dashboard</h5>
       </div>
 
+      <div className='date-filters'>
+        <input
+          type="date"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+        />
+        <input
+          type="date"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+        />
+
+        <button
+          className="clear-button"
+          onClick={() => {
+            setStartDate('');
+            setEndDate('');
+          }}
+        >
+          Clear
+        </button>
+      </div>
       <div className='graph_view'>
         <Row style={{ height: "100%", gap: "50px 0", marginBottom: "20px" }}>
+          <Row >
+          <DevExtremeLine
+            seriesVisibility={seriesVisibility}
+            toggleSeriesVisibility={toggleSeriesVisibility}
+            startDate={startDate}
+            endDate={endDate}
+          />
+          </Row>
           <Col md={6}>
-            <DevExtremeLine />
-          </Col>
-          <Col md={6}>
-            <DevExtreme />
-          </Col>
-          <Col md={12} sm={6}>
-          <DevExtremeStack />
+            <DevExtreme
+              seriesVisibility={seriesVisibility}
+              toggleSeriesVisibility={toggleSeriesVisibility}
+              startDate={startDate}
+              endDate={endDate} />
           </Col>
           <Col md={6} sm={6}>
-          <DynamicPie />
+            <DevExtremeStack
+              seriesVisibility={seriesVisibility}
+              toggleSeriesVisibility={toggleSeriesVisibility}
+              startDate={startDate}
+              endDate={endDate} />
+          </Col>
+          <Col md={6} sm={6}>
+            <DynamicPie />
           </Col>
           <Col md={6}>
-						<DevExtremeScatterChart />
+            <DevExtremeScatterChart />
           </Col>
-					<Col md={12}>
-						<DevExtremeDataGrid />
+          <Col md={12}>
+            <DevExtremeDataGrid />
           </Col>
         </Row>
       </div>
     </div>
   )
 
-	//const tableHead = ["S.No", "Pallet Number", "Current Location", "Warehouse", "Action", "Status"]
+  //const tableHead = ["S.No", "Pallet Number", "Current Location", "Warehouse", "Action", "Status"]
 
   // const options = [
   //   { value: 'chocolate', label: 'Chocolate' },
