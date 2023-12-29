@@ -34,6 +34,11 @@ function DevExtremeStack({ seriesVisibility, toggleSeriesVisibility, startDate, 
 }
 
 
+  function legendClickHandler(e) {
+    toggleSeriesVisibility(e.target.name)
+  }
+
+
   React.useEffect(() => {
     const fetchData = async () => {
       try {
