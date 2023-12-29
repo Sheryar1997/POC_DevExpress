@@ -23,22 +23,40 @@ const types2 = ['spline', 'stackedspline', 'fullstackedspline'];
 const types = ['line', 'stackedline', 'fullstackedline'];
 // const seriesTypeLabel = { 'aria-label': 'Series Type' };
 
-function legendClickHandler(e) {
-    e.target.isVisible() ? e.target.hide() : e.target.show();
-}
 
-const DevExtremeLine = () => {
+const DevExtremeLine = ({ seriesVisibility, toggleSeriesVisibility, startDate, endDate }) => {
     const [type, setType] = React.useState(types[0]);
     const [type2, setType2] = React.useState(types2[0]);
 
     const [countriesInfo, setCountriesInfo] = React.useState([]);
     const [energySources, setEnergySources] = React.useState([]);
 
+    function legendClickHandler(e) {
+        // if toggleSeriesVisibility is not a function, then return
+        if (typeof toggleSeriesVisibility !== "function"){
+            // hide the series
+            e.target.isVisible() ? e.target.hide() : e.target.show();
+        } else {
+            toggleSeriesVisibility(e.target.name)
+        }
+    }
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get('https://poc-dev-server.vercel.app/lineChart');
-                setCountriesInfo(response.data.lineChart);
+                let data = response.data.lineChart;
+
+                // Filter data if both startDate and endDate are set
+                if (startDate && endDate) {
+                    const start = new Date(startDate);
+                    const end = new Date(endDate);
+                    data = data.filter(item => 
+                        new Date(item.startDate) >= start && new Date(item.endDate) <= end
+                    );
+                }
+
+                setCountriesInfo(data);
                 setEnergySources(response.data.sources);
             } catch (error) {
                 console.error("Error fetching data: ", error);
@@ -46,7 +64,7 @@ const DevExtremeLine = () => {
         };
 
         fetchData();
-    }, []);
+    }, [startDate, endDate]);
 
     return (
         <div>
@@ -65,14 +83,17 @@ const DevExtremeLine = () => {
                                 argumentField="country"
                                 valueField="hydro"
                                 name="Hydro-electric"
-                            />
+                                visible={seriesVisibility?.["Hydro-electric"]}
+                                />
                             <Series
                                 valueField="oil"
                                 name="Oil"
+                                visible={seriesVisibility?.["Oil"]}
                             />
                             <Series
                                 valueField="gas"
                                 name="Natural gas"
+                                visible={seriesVisibility?.["Natural gas"]}
                             />
                             {/* {energySources.map((item) => (
                                 <Series key={item.value} valueField={item.value} name={item.name} />

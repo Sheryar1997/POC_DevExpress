@@ -14,6 +14,8 @@ import DevExtremeStack from '../DevExtremeStackedBar/DevExtremeStack.js';
 import DevExtremeScatterChart from '../DevExtremeScatterChart/DevExtemeScatter.js';
 import DevExtremeDataGrid from '../DevExtremeDataGrid/DevExtremeDataGrid.js';
 import { on } from 'devextreme/events';
+export const SeriesVisibilityContext = React.createContext();
+
 
 const Dashboard = () => {
   const [startDate, setStartDate] = React.useState(null);

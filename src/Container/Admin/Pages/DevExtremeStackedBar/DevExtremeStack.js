@@ -19,25 +19,44 @@ function customizeTooltip(arg) {
   };
 }
 
-function legendClickHandler(e) {
-  e.target.isVisible() ? e.target.hide() : e.target.show();
+
+function DevExtremeStack({ seriesVisibility, toggleSeriesVisibility, startDate, endDate }) {
+  const [dataSource, setDataSource] = React.useState([]);
+
+  function legendClickHandler(e) {
+    // if toggleSeriesVisibility is not a function, then return
+    if (typeof toggleSeriesVisibility !== "function"){
+        // hide the series
+        e.target.isVisible() ? e.target.hide() : e.target.show();
+    } else {
+        toggleSeriesVisibility(e.target.name)
+    }
 }
 
-function DevExtremeStack() {
-  const [dataSource, setDataSource] = React.useState([]);
 
   React.useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get('https://poc-dev-server.vercel.app/lineChart');
-        setDataSource(response.data.lineChart);
+        let data = response.data.lineChart;
+
+        // Filter data if both startDate and endDate are set
+        if (startDate && endDate) {
+          const start = new Date(startDate);
+          const end = new Date(endDate);
+          data = data.filter(item =>
+            new Date(item.startDate) >= start && new Date(item.endDate) <= end
+          );
+        }
+
+        setDataSource(data);
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
     };
 
     fetchData();
-  } , []);
+  }, [startDate, endDate]);
 
   return (
     <Chart
@@ -52,16 +71,20 @@ function DevExtremeStack() {
         type="stackedbar"
       />
       <Series
+        argumentField="country"
         valueField="hydro"
-        name="Hydro"
+        name="Hydro-electric"
+        visible={seriesVisibility?.["Hydro-electric"]}
       />
       <Series
         valueField="oil"
         name="Oil"
+        visible={seriesVisibility?.["Oil"]}
       />
       <Series
         valueField="gas"
         name="Natural gas"
+        visible={seriesVisibility?.["Natural gas"]}
       />
       <ValueAxis position="right">
         <Title text="millions" />
