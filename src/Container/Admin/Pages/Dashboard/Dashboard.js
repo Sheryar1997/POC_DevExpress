@@ -25,19 +25,19 @@ const Dashboard = () => {
 
       <div className='graph_view'>
         <Row style={{ height: "100%", gap: "50px 0", marginBottom: "20px" }}>
-          <Col md={12}>
+          <Col md={6}>
             <DevExtremeLine />
           </Col>
-          <Col md={12}>
+          <Col md={6}>
             <DevExtreme />
           </Col>
           <Col md={12} sm={6}>
-            <DynamicPie />
+          <DevExtremeStack />
           </Col>
-          <Col md={12} sm={6}>
-            <DevExtremeStack />
+          <Col md={6} sm={6}>
+          <DynamicPie />
           </Col>
-          <Col md={12}>
+          <Col md={6}>
 						<DevExtremeScatterChart />
           </Col>
 					<Col md={12}>

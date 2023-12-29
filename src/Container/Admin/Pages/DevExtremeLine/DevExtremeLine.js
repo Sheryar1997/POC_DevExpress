@@ -61,9 +61,22 @@ const DevExtremeLine = () => {
                             onLegendClick={legendClickHandler}
                             >
                             <CommonSeriesSettings argumentField="country" type={type} />
-                            {energySources.map((item) => (
+                            <Series
+                                argumentField="country"
+                                valueField="hydro"
+                                name="Hydro-electric"
+                            />
+                            <Series
+                                valueField="oil"
+                                name="Oil"
+                            />
+                            <Series
+                                valueField="gas"
+                                name="Natural gas"
+                            />
+                            {/* {energySources.map((item) => (
                                 <Series key={item.value} valueField={item.value} name={item.name} />
-                            ))}
+                            ))} */}
                             <Margin bottom={20} />
                             <ArgumentAxis valueMarginsEnabled={false} discreteAxisDivisionMode="crossLabels">
                                 <Grid visible={true} />

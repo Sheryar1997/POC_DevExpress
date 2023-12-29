@@ -66,7 +66,7 @@
 }
 
 .layout_content_sidebar_section {
-  /* width: 260px; */
+  width: 260px;
   /* width: 22vw; */
   background-color: #fff;
   /* box-shadow: 0px 30px 40px 0px #0000001A; */
@@ -82,7 +82,7 @@
 } */
 
 .layout_content_section .layout_content {
-  width: 77%;
+  width: 85%;
   padding: 0 10px;
   position: relative;
   /* min-height: 100vh; */
@@ -273,7 +273,7 @@
 .left_layout_overlay {
   overflow-y: scroll;
   height: 96vh;
-  width: 23%;
+  width: 15%;
   transition: all 0.3s ease;
 }
 

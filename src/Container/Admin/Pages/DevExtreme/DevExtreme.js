@@ -13,6 +13,11 @@ function legendClickHandler(e) {
     e.target.isVisible() ? e.target.hide() : e.target.show();
 }
 
+//
+//
+// -----------BAR CHART CODE--------------------
+//
+//
 const DevExtreme = () => {
     const [dataSource, setDataSource] = React.useState([]);
     const [grossProductData, setGrossProductData] = React.useState([]);
