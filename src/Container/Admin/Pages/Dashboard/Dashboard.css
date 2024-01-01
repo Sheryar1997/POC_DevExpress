@@ -296,7 +296,7 @@
     /* Light grey border */
     border-radius: 4px;
     /* Rounded corners */
-    padding: 8px 12px;
+    padding: 0px 12px;
     /* Padding inside the input */
     margin-right: 8px;
     /* Margin to separate the date pickers */

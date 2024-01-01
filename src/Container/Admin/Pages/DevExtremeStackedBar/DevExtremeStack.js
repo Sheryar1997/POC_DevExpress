@@ -64,48 +64,52 @@ function DevExtremeStack({ seriesVisibility, toggleSeriesVisibility, startDate, 
   }, [startDate, endDate]);
 
   return (
-    <Chart
-      id="chart"
-      title="Stack Bar Chart"
-      dataSource={dataSource}
-      onLegendClick={legendClickHandler}
+    <div className='graph_box'>
+      <h6 style={{ width: "fit-content", margin: "10px 0", position:'absolute' }}>Stack Bar Chart</h6>
 
-    >
-      <CommonSeriesSettings
-        argumentField="country"
-        type="stackedbar"
-      />
-      <Series
-        argumentField="country"
-        valueField="hydro"
-        name="Hydro-electric"
-        visible={seriesVisibility?.["Hydro-electric"]}
-      />
-      <Series
-        valueField="oil"
-        name="Oil"
-        visible={seriesVisibility?.["Oil"]}
-      />
-      <Series
-        valueField="gas"
-        name="Natural gas"
-        visible={seriesVisibility?.["Natural gas"]}
-      />
-      <ValueAxis position="right">
-        <Title text="millions" />
-      </ValueAxis>
-      <Legend
-        verticalAlignment="bottom"
-        horizontalAlignment="center"
-        itemTextPosition="top"
-      />
-      <Export enabled={true} />
-      <Tooltip
-        enabled={true}
-        location="edge"
-        customizeTooltip={customizeTooltip}
-      />
-    </Chart>
+      <Chart
+        id="chart"
+        title=""
+        dataSource={dataSource}
+        onLegendClick={legendClickHandler}
+
+      >
+        <CommonSeriesSettings
+          argumentField="country"
+          type="stackedbar"
+        />
+        <Series
+          argumentField="country"
+          valueField="hydro"
+          name="Hydro-electric"
+          visible={seriesVisibility?.["Hydro-electric"]}
+        />
+        <Series
+          valueField="oil"
+          name="Oil"
+          visible={seriesVisibility?.["Oil"]}
+        />
+        <Series
+          valueField="gas"
+          name="Natural gas"
+          visible={seriesVisibility?.["Natural gas"]}
+        />
+        <ValueAxis position="right">
+          <Title text="millions" />
+        </ValueAxis>
+        <Legend
+          verticalAlignment="bottom"
+          horizontalAlignment="center"
+          itemTextPosition="top"
+        />
+        <Export enabled={true} />
+        <Tooltip
+          enabled={true}
+          location="edge"
+          customizeTooltip={customizeTooltip}
+        />
+      </Chart>
+    </div>
   );
 }
 export default DevExtremeStack;

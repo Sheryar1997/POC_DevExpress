@@ -77,7 +77,7 @@ const DevExtreme = ({ seriesVisibility, toggleSeriesVisibility, startDate, endDa
 
                 <Col md={12}>
                     <div className='graph_box'>
-                        <h6 style={{ width: "fit-content", margin: "10px 0" }}>Bar Chart</h6>
+                        <h6 style={{ width: "fit-content", margin: "10px 0", position:'absolute' }}>Bar Chart</h6>
 
                         <Chart id="chart"
                             title=""

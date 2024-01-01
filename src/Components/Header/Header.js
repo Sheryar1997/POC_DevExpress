@@ -76,10 +76,9 @@ function Header({ sideBarItems, children }) {
         </div>
 
         <div className={sidebarToggle ? "layout_content shrink" : "layout_content"}>
-          <div className="user_header">
+          {/* <div className="user_header">
             <Row className="align-items-center make_col_reverse">
               <Col md={6}>
-                {/* Additional content can be added here if necessary */}
               </Col>
               <Col md={6}>
                 <Navbar collapseOnSelect expand="lg">
@@ -91,8 +90,6 @@ function Header({ sideBarItems, children }) {
                     <Nav className="ms-auto">
                       <div className="nav_header_right">
                         <div className="user_nav">
-                          {/* <img src="/images/user_img.png" alt="" /> */}
-
                           <NavDropdown title="Admin" id="basic-nav-dropdown">
                             <NavDropdown.Item>
                               <Link to='/profile'>Profile</Link>
@@ -108,7 +105,7 @@ function Header({ sideBarItems, children }) {
                 </Navbar>
               </Col>
             </Row>
-          </div>
+          </div> */}
 
           <div className="right_layout_overlay">
             {children}

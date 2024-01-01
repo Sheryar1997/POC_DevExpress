@@ -41,9 +41,9 @@ const Dashboard = () => {
   return (
     <div>
 
-      <div className='dashboard_head'>
+      {/* <div className='dashboard_head'>
         <h5>Dashboard</h5>
-      </div>
+      </div> */}
 
       <div className='date-filters'>
         <input
@@ -68,7 +68,7 @@ const Dashboard = () => {
         </button>
       </div>
       <div className='graph_view'>
-        <Row style={{ height: "100%", gap: "50px 0", marginBottom: "20px" }}>
+        <Row style={{ height: "100%", gap: "10px 0", marginBottom: "5px" }}>
           <Row >
           <DevExtremeLine
             seriesVisibility={seriesVisibility}

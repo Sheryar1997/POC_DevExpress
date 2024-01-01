@@ -43,7 +43,7 @@ export const adminSideBarItems = [
   {
     path: "/",
     icon: "/images/dashboard_icon.png",
-    title: "Dashboard - chart-js",
+    title: "Combo Dashboard",
   },
   {
     path: "#",
@@ -53,33 +53,33 @@ export const adminSideBarItems = [
       {
         path: "/bar",
         icon: "/images/consignee_icon.png",
-        title: "Dev Extreme - Bar chart",
+        title: "Bar chart",
       },
       {
         path: "/line",
         icon: "/images/dc_icon.png",
-        title: "Dev Extreme - Line chart",
+        title: "Line chart",
       },
       {
         path: "/pie",
         icon: "/images/enquiry_icon.png",
-        title: "Dev Extreme - Pie chart",
+        title: "Pie chart",
       },
       {
         path: "/stack",
         icon: "/images/dc_icon.png",
-        title: "Dev Extreme - Stacked Bar chart",
+        title: "Stacked Bar chart",
       },
       {
         path: "/scatter",
         icon: "/images/dc_icon.png",
-        title: "Dev Extreme - Scatter chart",
+        title: "Scatter chart",
       }
     ]
   },
   {
     path: "/data-grid",
     icon: "/images/cells.png",
-    title: "Dev Extreme - Data Grid",
+    title: "Data Grid",
   }
 ];

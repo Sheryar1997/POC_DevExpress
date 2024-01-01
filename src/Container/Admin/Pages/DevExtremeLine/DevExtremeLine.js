@@ -69,9 +69,9 @@ const DevExtremeLine = ({ seriesVisibility, toggleSeriesVisibility, startDate, e
     return (
         <div>
             <Row>
-                <Col md={12} className='mb-5'>
+                <Col md={12} className='mb-2'>
                     <div className='graph_box'>
-                        <h6 style={{ width: "fit-content", margin: "10px 0" }}>Line Chart</h6>
+                        <h6 style={{ width: "fit-content", margin: "10px 0" , position:'absolute' }}>Line Chart</h6>
 
                         <Chart
                             palette="Violet"

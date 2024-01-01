@@ -1,7 +1,7 @@
 .dashboard_head {
-    display: flex;
+    display: none;
     justify-content: space-between;
-    margin: 20px 5px;
+    margin: 0px 0px;
 }
 
 .dashboard_head h5 {
