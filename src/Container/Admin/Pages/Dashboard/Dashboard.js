@@ -18,8 +18,8 @@ export const SeriesVisibilityContext = React.createContext();
 
 
 const Dashboard = () => {
-  const [startDate, setStartDate] = React.useState(null);
-  const [endDate, setEndDate] = React.useState(null);
+  const [startDate, setStartDate] = React.useState('2023-01-01');
+  const [endDate, setEndDate] = React.useState('2023-05-01');
   const [seriesVisibility, setSeriesVisibility] = React.useState({
     "Hydro-electric": true,
     "Oil": true,
